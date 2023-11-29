@@ -71,12 +71,15 @@ const Main = () => {
                 const changedText = res.match(/\[[^\]]+\]/g)[0];
                 console.log(JSON.parse(changedText))
                 setResult(JSON.parse(changedText));
-                setLoading(false);
             })
             .catch((err)=>{
-                alert("에러 발생!");
-                console.log(err);
+                alert(err.message);
+                // console.log(err.message);
             })
+            .finally(()=>{
+                setLoading(false);
+            }
+            )
 		}
 	};
 	useEffect(() => {

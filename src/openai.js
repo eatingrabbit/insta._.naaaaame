@@ -28,7 +28,7 @@ function GPT4({ name, eng_name, chin_name, birthday, nickname }) {
         아이디에는 알파벳 소문자와 대문자 그리고 '.'과 '_' 기호만 사용할 수 있습니다.
         보통은 알파벳 대문자나 소문자 중에는 소문자를 많이 사용하고, 소문자와 대문자를 섞어서 사용하지는 않습니다.
         음절 사이에는 언더바('_')나 귀여운 표정('._.')을 많이 넣습니다.
-        앞에서 설명한 방법을 종합해서 "${name}"에 대한 인스타그램 아이디를 추천해주십시오.
+        앞에서 설명한 방법을 종합해서 "김서인"에 대한 인스타그램 아이디를 추천해주십시오.
         {"${name}(${eng_name})","${chin_name}", ${birthday}, "${nickname}"}
         출력은 다음과 같이 별다른 설명 없이 20개의 아이디를 나열해서 javascript의 Array 형태로 반환되어야 합니다.
         ["lee_ha_yun", "ha._.yun", "eatingrabbit1004"]
@@ -55,9 +55,10 @@ function GPT4({ name, eng_name, chin_name, birthday, nickname }) {
       return res.data.choices[0].message.content;
     })
     .catch((err) => {
-      console.log("error: " + err.response.data.error);
-      alert("에러 발생!");
-      return "";
+        if(err.response.status === 401){
+            throw new Error("error: openai api 권한이 없거나 만료되었습니다.");
+        }
+        throw new Error("error: axios error")
     });
   // }
 }
