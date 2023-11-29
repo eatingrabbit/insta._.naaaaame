@@ -1,0 +1,19 @@
+name: Automatically Deployment
+
+on: 
+  push:
+    branches: main
+jobs: 
+  deployment:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: '16'
+          
+      - name: Setting .env
+        run: | 
+          echo "REACT_APP_OPENAI_KEY =$REACT_APP_OPENAI_KEY" >> .env
+        env:  
+          REACT_APP_OPENAI_KEY: ${{ secrets.REACT_APP_OPENAI_KEY }}
